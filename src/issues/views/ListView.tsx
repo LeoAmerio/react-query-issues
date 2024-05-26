@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { IssueList, LabelPicker } from '../components';
-import { useIssue } from '../hooks';
+import { useIssues } from '../hooks';
 import { LoadingIcon } from '../../shared/components/LoadingIcon';
 
 
 export const ListView = () => {
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
-  const issueQuery = useIssue();
+  const issueQuery = useIssues();
 
   const onLabelChanged = (labelName: string) => {
     (selectedLabels.includes(labelName))
