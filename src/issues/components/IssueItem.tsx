@@ -29,18 +29,14 @@ export const IssueItem: FC<Props> = ({ issue }) => {
       {
         staleTime: 4000,
       }
-    )
+    );
   };
 
   const preSetData = () => {
-    queryClient.setQueryData(
-      ["issue", issue.number],
-      issue,
-      {
-        updatedAt: new Date().getTime() + 1000,
-      }
-    );
-  }
+    queryClient.setQueryData(["issue", issue.number], issue, {
+      updatedAt: new Date().getTime() + 1000,
+    });
+  };
 
   return (
     <div
@@ -62,6 +58,17 @@ export const IssueItem: FC<Props> = ({ issue }) => {
             #{issue.number} opened 2 days ago by{" "}
             <span className="fw-bold">{issue.user.login}</span>
           </span>
+          <div>
+            {issue.labels.map((label) => (
+              <span
+                className="badge bg-primary rounded-pill m-1"
+                key={label.id}
+                style={{ backgroundColor: `#${label.color}`, color: "black" }}
+              >
+                {label.name}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="d-flex align-items-center">
