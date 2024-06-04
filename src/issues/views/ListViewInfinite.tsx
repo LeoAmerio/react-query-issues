@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { IssueList, LabelPicker } from "../components";
-import { useIssues } from "../hooks";
+import { useIssues, useIssuesInfinite } from "../hooks";
 import { LoadingIcon } from "../../shared/components/LoadingIcon";
 import { State } from "../interfaces";
 
-export const ListView = () => {
+export const ListViewInifinite = () => {
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [state, setState] = useState<State>();
-  const { issueQuery, page, nextPage, prevPage } = useIssues({
+  const { issueQuery } = useIssuesInfinite({
     state,
     labels: selectedLabels,
   });
@@ -25,18 +25,14 @@ export const ListView = () => {
           <LoadingIcon />
         ) : (
           <IssueList
-            issues={issueQuery.data || []}
+            issues={issueQuery.data?.pages.flat() || []}
             state={state}
             onStateChanged={(newState) => setState(newState)}
           />
         )}
         <div className="d-flex mt-2 justify-content-between align-items-center">
-          <button className="btn btn-outline-primary" onClick={prevPage} >
-            Previous
-          </button>
-          <span>{page}</span>
-          <button className="btn btn-outline-primary" onClick={nextPage} disabled={issueQuery.isFetching}>
-            Next
+          <button className="btn btn-outline-primary">
+            Load More
           </button>
         </div>
       </div>
