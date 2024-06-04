@@ -31,7 +31,11 @@ export const ListViewInifinite = () => {
           />
         )}
         <div className="d-flex mt-2 justify-content-between align-items-center">
-          <button className="btn btn-outline-primary">
+          <button
+            className="btn btn-outline-primary"
+            onClick={() => issueQuery.fetchNextPage()}
+            disabled={ !issueQuery.hasNextPage }
+          >
             Load More
           </button>
         </div>
